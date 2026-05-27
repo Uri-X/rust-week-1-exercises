@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use rand::Rng;
+use std::collections::HashMap;
 
 // Name Assignment (variables and constants)
 pub const MINING_REWARD: f64 = 3.125;
@@ -58,14 +58,21 @@ pub fn add_utxo(mut utxos: Vec<Utxo>, new_utxo: Utxo) -> Vec<Utxo> {
 }
 
 pub fn find_high_fee(fee_list: &[f64]) -> Option<(usize, f64)> {
-    fee_list.iter().enumerate().find(|(_, &fee)| fee > 0.005).map(|(i, &fee)| (i, fee))
+    fee_list
+        .iter()
+        .enumerate()
+        .find(|(_, &fee)| fee > 0.005)
+        .map(|(i, &fee)| (i, fee))
 }
 pub fn get_wallet_details() -> (String, f64) {
     ("satoshi_wallet".to_string(), 50.0)
 }
 
 pub fn get_tx_status(tx_pool: &HashMap<String, String>, txid: &str) -> String {
-    tx_pool.get(txid).cloned().unwrap_or_else(|| "not found".to_string())
+    tx_pool
+        .get(txid)
+        .cloned()
+        .unwrap_or_else(|| "not found".to_string())
 }
 
 pub fn unpack_wallet_info(wallet_info: (String, f64)) -> String {
@@ -110,7 +117,8 @@ pub fn halving_schedule(blocks: &[u64]) -> HashMap<u64, u64> {
 }
 
 pub fn find_utxo_with_min_value(utxos: &[Utxo], target: u64) -> Option<Utxo> {
-    utxos.iter()
+    utxos
+        .iter()
         .filter(|u| u.value >= target)
         .min_by_key(|u| u.value)
         .cloned()
